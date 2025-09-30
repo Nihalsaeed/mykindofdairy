@@ -208,7 +208,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <p class="text-gray-300 whitespace-pre-wrap">${entry.content}</p>
+                            <p class="text-gray-300 whitespace-pre-wrap cursor-pointer" data-id="${entry.id}">${entry.content}</p>
                         `;
                         journalEntriesContainer.appendChild(entryEl);
                     });
@@ -350,6 +350,30 @@
                 const deleteButton = e.target.closest('.delete-btn');
                 if (deleteButton) {
                     showDeleteModal(deleteButton.dataset.id);
+                    return;
+                }
+                
+                // Check if the click is on the entry content (for editing)
+                const entryContent = e.target.closest('[data-id]');
+                if (entryContent && entryContent.dataset.id) {
+                    // Load the entry for editing
+                    const entryId = entryContent.dataset.id;
+                    const entry = journalEntries.find(e => e.id === entryId);
+                    if (entry) {
+                        // Set the date input to the entry's date
+                        entryDateInput.value = entryId;
+                        
+                        // Load the entry content
+                        journalInput.value = entry.content;
+                        
+                        // Update the display date
+                        const displayDate = new Date(entryId);
+                        const formattedDisplayDate = displayDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+                        entryDateEl.textContent = `Editing: ${formattedDisplayDate}`;
+                        
+                        // Scroll to the editor
+                        document.querySelector('.bg-black.border.border-sky-500.p-6.rounded-xl').scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             });
 
