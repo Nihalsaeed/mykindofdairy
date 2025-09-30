@@ -208,7 +208,7 @@
                                     </svg>
                                 </button>
                             </div>
-                            <p class="text-gray-300 whitespace-pre-wrap cursor-pointer" data-id="${entry.id}">${entry.content}</p>
+                            <div class="text-gray-300 whitespace-pre-wrap cursor-pointer" data-id="${entry.id}">${entry.content}</div>
                         `;
                         journalEntriesContainer.appendChild(entryEl);
                     });
@@ -228,12 +228,17 @@
                     return;
                 }
                 
+                // Get current time for timestamp
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                
                 const existingEntryIndex = journalEntries.findIndex(e => e.id === selectedDate);
                 if (existingEntryIndex > -1) {
-                    // Append new content to existing content with a separator
-                    journalEntries[existingEntryIndex].content += '\n\n---\n\n' + content;
+                    // Append new content to existing content with a timestamp
+                    journalEntries[existingEntryIndex].content += `\n\n[${timeString}]\n${content}`;
                 } else {
-                    journalEntries.push({ id: selectedDate, content: content });
+                    // Add timestamp to new entries
+                    journalEntries.push({ id: selectedDate, content: `[${timeString}] ${content}` });
                 }
                 journalEntries.sort((a, b) => b.id.localeCompare(a.id));
                 saveEntriesToLocal();
