@@ -147,34 +147,67 @@
             // --- Render Entries ---
             function renderEntries() {
                 const searchTerm = searchInput.value.toLowerCase().trim();
+                
+                // Get the parent container and sections
+                const mainContainer = document.querySelector('main');
+                const searchSection = document.querySelector('.bg-black.border.border-sky-500.p-4.rounded-xl.shadow-md.mb-8');
+                const inputSection = document.querySelector('.bg-black.border.border-sky-500.p-6.rounded-xl.shadow-md.mb-8');
+                const entriesSection = document.querySelector('#journal-entries').parentElement;
 
-                const filteredEntries = journalEntries.filter(entry => {
-                    if (!searchTerm) {
-                        return true; // Show all if search is empty
+                let filteredEntries = [];
+                if (!searchTerm) {
+                    // Show all entries in date order if no search term
+                    filteredEntries = [...journalEntries];
+                    // Restore default order when no search term - input section should be after search section
+                    if (entriesSection.previousElementSibling === searchSection) {
+                        mainContainer.insertBefore(inputSection, entriesSection);
                     }
-                    
-                    // Safely parse the date
-                    let formattedDate = '';
-                    try {
-                        const entryDate = new Date(entry.id + 'T00:00:00');
-                        if (isNaN(entryDate.getTime())) {
-                            // Fallback if date parsing fails
+                } else {
+                    // Filter entries that match the search term
+                    filteredEntries = journalEntries.filter(entry => {
+                        // Safely parse the date
+                        let formattedDate = '';
+                        try {
+                            const entryDate = new Date(entry.id + 'T00:00:00');
+                            if (isNaN(entryDate.getTime())) {
+                                // Fallback if date parsing fails
+                                formattedDate = entry.id;
+                            } else {
+                                formattedDate = entryDate.toLocaleDateString('en-GB', {
+                                    day: 'numeric', month: 'long', year: 'numeric'
+                                }).toLowerCase();
+                            }
+                        } catch (e) {
+                            // Fallback if date parsing throws an error
                             formattedDate = entry.id;
-                        } else {
-                            formattedDate = entryDate.toLocaleDateString('en-GB', {
-                                day: 'numeric', month: 'long', year: 'numeric'
-                            }).toLowerCase();
                         }
-                    } catch (e) {
-                        // Fallback if date parsing throws an error
-                        formattedDate = entry.id;
+
+                        const matchContent = entry.content.toLowerCase().includes(searchTerm);
+                        const matchDate = formattedDate.includes(searchTerm) || entry.id.includes(searchTerm);
+
+                        return matchContent || matchDate;
+                    });
+
+                    // Sort entries to bring exact matches to the top
+                    filteredEntries.sort((a, b) => {
+                        // Calculate match scores for both entries
+                        const aScore = calculateMatchScore(a, searchTerm);
+                        const bScore = calculateMatchScore(b, searchTerm);
+                        
+                        // Higher score first (better matches at the top)
+                        if (bScore !== aScore) {
+                            return bScore - aScore;
+                        }
+                        
+                        // If scores are equal, sort by date (newest first)
+                        return b.id.localeCompare(a.id);
+                    });
+                    
+                    // Move entries section above input section when searching
+                    if (inputSection.previousElementSibling !== entriesSection) {
+                        mainContainer.insertBefore(entriesSection, inputSection);
                     }
-
-                    const matchContent = entry.content.toLowerCase().includes(searchTerm);
-                    const matchDate = formattedDate.includes(searchTerm) || entry.id.includes(searchTerm);
-
-                    return matchContent || matchDate;
-                });
+                }
 
                 journalEntriesContainer.innerHTML = '';
                 if (journalEntries.length === 0) {
@@ -362,7 +395,6 @@
 
             // --- Event Listeners ---
             saveButton.addEventListener('click', saveJournalEntry);
-            searchInput.addEventListener('input', renderEntries);
             exportButton.addEventListener('click', exportJournal);
             importButton.addEventListener('click', () => importFileInput.click());
             importFileInput.addEventListener('change', importJournal);
@@ -370,6 +402,17 @@
             cancelDeleteBtn.addEventListener('click', hideDeleteModal);
             entryDateInput.addEventListener('change', loadTodaysEntry);
             
+            // Handle search input with layout changes
+            let previousSearchValue = '';
+            searchInput.addEventListener('input', (e) => {
+                // If we had a search term before but now it's empty, restore the original layout
+                if (previousSearchValue && e.target.value === '') {
+                    setTimeout(renderEntries, 10); // Slight delay to ensure DOM is ready
+                }
+                previousSearchValue = e.target.value;
+                renderEntries(); // Always render entries on input
+            });
+
             journalEntriesContainer.addEventListener('click', (e) => {
                 const deleteButton = e.target.closest('.delete-btn');
                 if (deleteButton) {
