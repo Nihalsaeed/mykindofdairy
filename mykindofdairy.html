@@ -199,6 +199,12 @@
                             formattedDate = entry.id;
                         }
 
+                        // Highlight search terms in content if there's a search term
+                        let displayContent = entry.content;
+                        if (searchTerm) {
+                            displayContent = highlightSearchTerms(entry.content, searchTerm);
+                        }
+
                         entryEl.innerHTML = `
                             <div class="flex justify-between items-center mb-3">
                                 <h3 class="text-lg font-bold text-gray-200">${formattedDate}</h3>
@@ -208,11 +214,23 @@
                                     </svg>
                                 </button>
                             </div>
-                            <div class="text-gray-300 whitespace-pre-wrap cursor-pointer" data-id="${entry.id}">${entry.content}</div>
+                            <div class="text-gray-300 whitespace-pre-wrap cursor-pointer" data-id="${entry.id}">${displayContent}</div>
                         `;
                         journalEntriesContainer.appendChild(entryEl);
                     });
                 }
+            }
+
+            // Function to highlight search terms in content
+            function highlightSearchTerms(content, searchTerm) {
+                if (!searchTerm) return content;
+                
+                // Escape special regex characters
+                const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
+                
+                // Replace matching terms with highlighted version
+                return content.replace(regex, '<span class="bg-yellow-400 text-black font-semibold">$1</span>');
             }
 
             // --- Save/Update Entry ---
