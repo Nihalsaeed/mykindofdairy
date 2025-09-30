@@ -230,7 +230,8 @@
                 
                 const existingEntryIndex = journalEntries.findIndex(e => e.id === selectedDate);
                 if (existingEntryIndex > -1) {
-                    journalEntries[existingEntryIndex].content = content;
+                    // Append new content to existing content with a separator
+                    journalEntries[existingEntryIndex].content += '\n\n---\n\n' + content;
                 } else {
                     journalEntries.push({ id: selectedDate, content: content });
                 }
