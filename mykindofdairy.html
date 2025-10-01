@@ -402,6 +402,16 @@
             cancelDeleteBtn.addEventListener('click', hideDeleteModal);
             entryDateInput.addEventListener('change', loadTodaysEntry);
             
+            // Add Ctrl+Enter shortcut to save entries
+            // Use both keydown and keypress events for better compatibility
+            journalInput.addEventListener('keydown', function(e) {
+                // Check for Ctrl+Enter (Windows/Linux) or Cmd+Enter (Mac)
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    saveJournalEntry();
+                }
+            });
+
             // Handle search input with layout changes
             let previousSearchValue = '';
             searchInput.addEventListener('input', (e) => {
