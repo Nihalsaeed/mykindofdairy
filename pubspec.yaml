@@ -1,5 +1,5 @@
 name: my_kind_of_diary
-description: A personal journal app
+description: A simple, elegant, and private offline journal for daily reflections with local storage and import/export functionality
 publish_to: 'none'
 version: 1.0.0+1
 
