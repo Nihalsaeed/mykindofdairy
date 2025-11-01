@@ -38,9 +38,11 @@ This Flutter app is a full-featured replica of an existing HTML journal applicat
 - **Minimalist Interface**: Clean design focused on content creation
 
 ## 📱 Screenshots
+<div style="display: flex; gap: 10px;">
 <img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162845.png" alt="homepage" width="200"/>
 <img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162858.png" alt="entry saved" width="200"/>
 <img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162909.png" alt="journal exported" width="200"/>
+</div>
 
 
 ## 🚀 Getting Started
