@@ -39,10 +39,8 @@ This Flutter app is a full-featured replica of an existing HTML journal applicat
 
 ## 📱 Screenshots
 <img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162845.png" alt="homepage" width="200"/>
-![entry saved](https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162858.png)
-![journal exportes](https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162909.png)
-
-
+<img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162858.png" alt="entry saved" width="200"/>
+<img src="https://github.com/Nihalsaeed/mykindofdairy/blob/0908fe37c0e15c9bffdbc54f77c96d86f8c702da/assets/Screenshot_20251101-162909.png" alt="journal exported" width="200"/>
 
 
 ## 🚀 Getting Started
