@@ -75,8 +75,6 @@ class JournalList extends StatelessWidget {
     }
 
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       itemCount: filteredEntries.length,
       itemBuilder: (context, index) {
         final JournalEntry entry = filteredEntries[index];

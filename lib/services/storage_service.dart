@@ -554,42 +554,4 @@ class StorageService {
       return false;
     }
   }
-
-  // Debug method to check SharedPreferences directly
-  Future<void> debugSharedPreferences() async {
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      print('=== SharedPreferences Debug ===');
-      print('Storage key: $_storageKey');
-      
-      final keys = prefs.getKeys();
-      print('All keys in SharedPreferences: $keys');
-      
-      final entriesJson = prefs.getString(_storageKey);
-      print('Entries JSON exists: ${entriesJson != null}');
-      
-      if (entriesJson != null) {
-        print('Entries JSON length: ${entriesJson.length}');
-        print('Entries JSON content: $entriesJson');
-        
-        try {
-          final List<dynamic> jsonList = json.decode(entriesJson);
-          print('Parsed JSON list with ${jsonList.length} items');
-          
-          for (int i = 0; i < jsonList.length; i++) {
-            print('Item $i: $jsonList[i]');
-          }
-        } catch (e) {
-          print('Error parsing JSON: $e');
-        }
-      } else {
-        print('No entries found in SharedPreferences');
-      }
-      
-      print('=== End Debug ===');
-    } catch (e, stackTrace) {
-      print('Error in debugSharedPreferences: $e');
-      print('Stack trace: $stackTrace');
-    }
-  }
 }

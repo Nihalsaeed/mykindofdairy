@@ -393,29 +393,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: _importJournal,
           ),
-          // Temporary debug button
-          IconButton(
-            icon: const Icon(
-              Icons.bug_report,
-              color: Colors.red,
-            ),
-            onPressed: () async {
-              print('Debug button pressed');
-              print('Current entries in state: ${_entries.length}');
-              for (int i = 0; i < _entries.length; i++) {
-                print('State entry $i: ID=${_entries[i].id}, Content length=${_entries[i].content.length}');
-              }
-              
-              await _storageService.debugSharedPreferences();
-              
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Debug info logged to console'),
-                  backgroundColor: Colors.green,
-                ),
-              );
-            },
-          ),
         ],
       ),
       body: Padding(
