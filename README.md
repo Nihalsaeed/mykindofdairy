@@ -39,7 +39,7 @@ This Flutter app is a full-featured replica of an existing HTML journal applicat
 
 ## 📱 Screenshots
 
-*(Add screenshots of your app here)*
+
 
 ## 🚀 Getting Started
 
@@ -154,12 +154,6 @@ Exported files are JSON with the format:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- Inspired by the original HTML journal application
-- Built with Flutter for cross-platform compatibility
-- Uses SharedPreferences for reliable local storage
-
 ## 📞 Support
 
-For support, email [your-email@example.com] or open an issue in the repository.
+For support, email [nihalsaeed@gmail.com] or open an issue in the repository.
